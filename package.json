@@ -6,7 +6,10 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "predev": "npm run typegen",
+    "prebuild": "npm run typegen",
+    "typegen": "sanity schema extract --path=./src/sanity/extract.json && sanity typegen generate"
   },
   "overrides": {
     "react": "19.0.0-rc-69d4b800-20241021",

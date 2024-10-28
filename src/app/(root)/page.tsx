@@ -1,5 +1,5 @@
 import SearchForm from "@/components/shared/search-form";
-import StartupCard from "@/components/shared/start-up-card";
+import StartupCard, { StartupTypeCard } from "@/components/shared/start-up-card";
 import { client } from "@/sanity/lib/client";
 import { STARTUPS_QUERY } from "@/sanity/lib/queries";
 
@@ -11,7 +11,7 @@ export default async function Home({searchParams}:{
   const query = (await searchParams).query
   const posts = await client.fetch(STARTUPS_QUERY)
 
-    
+
   return (
     <>
       <section className="pink_container">
@@ -34,8 +34,9 @@ export default async function Home({searchParams}:{
         </p>
         <ul className="mt-7 card_grid">
           {posts?.length > 0 ? (
-            posts.map((post: StartupTypeCard) => (
-              <StartupCard key={post?._id} post={post} />
+            posts.map((post: unknown ) => (
+              // @ts-expect-error Type 'unknown' is not assignable to type 'StartupTypeCard'.
+              <StartupCard key={post?._id} post={post as StartupTypeCard} />
             ))
           ) : (
             <p className="no-results">No startups found</p>
